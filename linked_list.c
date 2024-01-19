@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "linked_list.h"
 
@@ -12,11 +13,35 @@ void insert_at_beginning(node **head, int d){
     if(nn == NULL){
         return;
     }
+    nn->data = d;
+    nn->next = NULL;
 
-    nn->next = (*head)->next;
+    nn->next = *head;
     *head = nn;
 }
 
 void traverse(node **head){
+    printf("\nList: [");
+    node *p = *head;
+    while(p){
+        printf("%d ", p->data);
+        p = p->next;
+    }
+    printf("]\n");
     return;
+}
+
+void reverse_list(node** head)  //reverses list 
+{
+    node* prev = NULL;
+    node* current = *head;
+    node* next = NULL;
+    while (current != NULL) 
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    *head = prev;
 }

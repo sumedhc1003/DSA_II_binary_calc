@@ -4,7 +4,8 @@ The driver file of the calculator
 
 
 #include <stdio.h>
-#include "expression_evaluation.c"
+#include "expression_evaluation.h"
+#include "linked_list.h"
 #define SIZE 200
 
 
@@ -33,9 +34,8 @@ int main() {
         result = evaluate_expression(input);
 
         //printing the result
+        reverse_list(&result);
         traverse(&result);
-
-        printf("\nOK!!\n");
     }
 
     
