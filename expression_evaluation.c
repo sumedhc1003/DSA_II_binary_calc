@@ -104,7 +104,7 @@ node* evaluate_expression(char input[]) {
     init_operand_stack(&s2, LIMIT);
 
 
-
+    node* operand1 = NULL,*operand2 = NULL, *result = NULL;
     int j = 0; //for travering the array of LL
     int i = 0; //for the input string
     while(input[i] != '\0'){
@@ -130,9 +130,9 @@ node* evaluate_expression(char input[]) {
             else{
                 while(is_empty_operator(&s1) != 1 && precedence(input[i]) <= precedence(peek_operator(&s1))){
                     char operator = pop_operator(&s1);
-                    node* operand1 = pop_operand(&s2);
-                    node* operand2 = pop_operand(&s2);
-                    node* result = calculations(operand1, operand2, operator);
+                    operand2 = pop_operand(&s2); //the lastest operand will be at the top
+                    operand1 = pop_operand(&s2);
+                    result = calculations(operand1, operand2, operator);
                     push_operand(&s2, result);
                 }
                 push_operator(&s1, input[i]);
@@ -147,9 +147,9 @@ node* evaluate_expression(char input[]) {
     //emptying the stack
     while(is_empty_operator(&s1) != 1){
         char operator = pop_operator(&s1);
-        node* operand1 = pop_operand(&s2);
-        node* operand2 = pop_operand(&s2);
-        node* result = calculations(operand1, operand2, operator);
+        operand2 = pop_operand(&s2); //the lastest operand will be at the top
+        operand1 = pop_operand(&s2);
+        result = calculations(operand1, operand2, operator);
         push_operand(&s2, result);
     }
 

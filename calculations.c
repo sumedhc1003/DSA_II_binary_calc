@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "calculations.h"
 #include "linked_list.h"
@@ -89,11 +90,12 @@ node* determine_greater_operand(node** operand1, node** operand2){
 }
 
 //function for actual subtraction
-node* subtraction(node** operand1, node** operand2){
+node* subtraction(node** operand1, node** operand2){   
 
     //checking the LL for which one is greater
     int flag_for_negative;
     node* greater_LL = determine_greater_operand(operand1, operand2);
+
 
     //determining the smaller LL
     node *smaller_LL = NULL;
@@ -112,6 +114,7 @@ node* subtraction(node** operand1, node** operand2){
     //declaring pointer for ecah of LL
     node* greater_ptr = greater_LL;
     node* smaller_ptr = smaller_LL;
+
 
     int difference, borrow = 0;
 
