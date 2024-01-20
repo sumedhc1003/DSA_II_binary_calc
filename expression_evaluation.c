@@ -59,13 +59,13 @@ node* calculations(node* operand1, node* operand2, char operator){
             result = addition(&operand1, &operand2);
             break;
         case('-'):
-            //result = subtract_Two_Lists(&val1,&val2);
+            result = subtraction(&operand1, &operand2);
             break;
         case('*'):
-            //result = multiply_Two_Lists(&val1,&val2);
+            result = multiplication(&operand1, &operand2);
             break;
         case('/'):
-            //result = divide_Two_lists(&val1,&val2);
+            result = division(&operand1, &operand2);
             break;
         default:
             break;
