@@ -202,7 +202,9 @@ node* multiplication(node** operand1, node** operand2){
 
     //declaring the result LL
     node *result = NULL;
-    node* result_ptr1 = append_at_end(&result, 0); //creating a node was to handle the case of seg fault due to initialization of result pointers 1 and 2
+    insert_at_beginning(&result, 0);//creating a node was to handle the case of seg fault due to initialization of result pointers 1 and 2
+    insert_at_beginning(&result, 0);
+    node* result_ptr1 = result;
 
     //declaring the pointers for iteration ahead
     node *ptr1 = *operand1, *ptr2 = *operand2; //operand pointers
@@ -213,6 +215,8 @@ node* multiplication(node** operand1, node** operand2){
     while(ptr2){
 
         result_ptr2 = result_ptr1; //resetting the result pointer to be used to traverse result LL again.
+        
+
         ptr1 = *operand1;  //resetting the point to the start operand1 after each iteration
         carry = 0; //resetting carry
         
@@ -226,14 +230,13 @@ node* multiplication(node** operand1, node** operand2){
                 carry = mul_result / 10; //finding the carry 
 
                 result_ptr2 = append_at_end(&result, mul_result % 10); //creating the node in result LL
-                printf("\nOK1\n");
             }
             else{ //incase the node exist at result pointer 2
             
                 int mul_result = (result_ptr2->data) + (ptr1->data * ptr2->data) + carry;
                 carry = mul_result / 10; //finding the carry 
                 result_ptr2->data = mul_result % 10; //updating the value in the LL
-                printf("\nOK2\n");
+
             }
 
             //incremeting the required pointers
@@ -242,14 +245,19 @@ node* multiplication(node** operand1, node** operand2){
         }
         
         // if carry is remaining from last multiplication
-            if (carry != 0) {
-                if(result_ptr2 == NULL){
-                    result_ptr2 = append_at_end(&result, carry);
-                }
-                else{
-                    result_ptr2->data += carry;
-                }
+        if (carry != 0) {
+            if(result_ptr2 == NULL){
+                result_ptr2 = append_at_end(&result, carry);
             }
+            else{
+                result_ptr2->data += carry;
+            }
+        }
+
+        //to handle an edge case wherein first result pointer might go to NULL
+        if(result_ptr1 == NULL){
+            result_ptr1 = result_ptr2;
+        }
         
         result_ptr1 = result_ptr1->next; //move one place left for addition of the next digit of operand2 with operand1
         ptr2 = ptr2->next;

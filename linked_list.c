@@ -19,7 +19,7 @@ node* append_at_end(node **head, int d){
     // If the linked list is empty, make the new node as the head
     if (*head == NULL) {
         *head = nn;
-        return NULL;
+        return nn;
     }
 
     // Traverse the list to find the temp node
