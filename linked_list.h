@@ -11,5 +11,6 @@ node* append_at_end(node **head, int d);
 void traverse(node **head);
 void reverse_list(node **head);
 int count_nodes(node **head);
+int is_zero(node **head);
 
 #endif

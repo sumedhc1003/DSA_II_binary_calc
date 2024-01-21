@@ -33,6 +33,11 @@ int main() {
         // evaluating the input and return a pointer to the result linked list
         result = evaluate_expression(input);
 
+        //exception handling
+        if(result == NULL){
+            return 1;
+        }
+
         //printing the result
         reverse_list(&result);
         traverse(&result);

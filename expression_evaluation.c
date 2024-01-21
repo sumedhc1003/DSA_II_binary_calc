@@ -18,11 +18,11 @@ int precedence(char c){
             break;
 
         case '+':
-            return 5;
+            return 3;
             break;
 
         case '-':
-            return 5;
+            return 6;
             break;
 
         default:
@@ -56,7 +56,42 @@ node* calculations(node* operand1, node* operand2, char operator){
     node* result;
     switch(operator){
         case('+'):
-            result = addition(&operand1, &operand2);
+            reverse_list(&operand1);
+            reverse_list(&operand2);
+
+            if(operand1->data < 0){
+                operand1->data = -(operand1->data);
+                if(operand2->data < 0){ //incase both are negative
+                    operand2->data = -(operand2->data);
+                    reverse_list(&operand1);
+                    reverse_list(&operand2);
+
+                    result = addition(&operand1, &operand2);
+
+                    //adding negative to the result
+                    reverse_list(&result);
+                    result->data = -(result->data);
+                    reverse_list(&result);
+                }
+                else{ // first negative and second positve
+                    reverse_list(&operand1);
+                    reverse_list(&operand2);
+                    result = subtraction(&operand2, &operand1);
+                }
+            }
+            else{ 
+                if(operand2->data < 0){ //first positive and second negative
+                    operand2->data = -(operand2->data);
+                    reverse_list(&operand1);
+                    reverse_list(&operand2);
+                    result = subtraction(&operand1, &operand2);
+                }
+                else{ //incase both postive
+                    reverse_list(&operand1);
+                    reverse_list(&operand2);
+                    result = addition(&operand1, &operand2);
+                }
+            }
             break;
         case('-'):
             result = subtraction(&operand1, &operand2);
@@ -66,6 +101,11 @@ node* calculations(node* operand1, node* operand2, char operator){
             break;
         case('/'):
             result = division(&operand1, &operand2);
+            if(result == NULL){
+                // Handle divide by zero error
+                printf("Error: Division by zero\n");
+                return NULL;
+            }
             break;
         default:
             break;

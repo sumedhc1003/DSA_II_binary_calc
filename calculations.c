@@ -283,6 +283,11 @@ node* copy_LL(node* head){
 
 node* division(node** operand1, node** operand2){
 
+    //handling divide by zero error by checking if operand 2 is zero.
+    if (is_zero(operand2)) {
+        return NULL;
+    }
+
     //initializing the result LL
     node* result = NULL;
     insert_at_beginning(&result, 0);

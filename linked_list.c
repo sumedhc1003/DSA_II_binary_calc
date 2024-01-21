@@ -82,3 +82,15 @@ int count_nodes(node **head){
     }
     return size;
 }
+
+int is_zero(node **head){
+    node* ptr = *head;
+    while(ptr){
+        if(ptr->data != 0){
+            return 0;
+        }
+
+        ptr = ptr->next;
+    }
+    return 1;
+}
