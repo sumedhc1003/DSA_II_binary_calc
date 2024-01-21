@@ -7,6 +7,7 @@
 int precedence(char c);
 int is_operand(char c);
 int is_operator(char c);
+int has_consecutive_operators(char input[]);
 node* calculations(node* operand1, node* operand2, char operator);
 node* evaluate_expression(char input[]);
 

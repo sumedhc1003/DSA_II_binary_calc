@@ -12,5 +12,6 @@ void traverse(node **head);
 void reverse_list(node **head);
 int count_nodes(node **head);
 int is_zero(node **head);
+void free_list(node* head);
 
 #endif

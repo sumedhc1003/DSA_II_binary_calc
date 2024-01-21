@@ -94,3 +94,12 @@ int is_zero(node **head){
     }
     return 1;
 }
+
+//function for freeing nodes
+void free_list(node* head) {
+    while (head != NULL) {
+        node* temp = head;
+        head = head->next;
+        free(temp);
+    }
+}

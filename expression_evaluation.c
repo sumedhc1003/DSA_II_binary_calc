@@ -52,7 +52,28 @@ int is_operator(char c)
 	
 }
 
+//function for checking consecutive opertors
+int has_consecutive_operators(char input[]) {
+    int i = 0;
+    while (input[i] != '\0') {
+        if (is_operator(input[i])) {
+            i++;
+            while (is_operator(input[i]) || input[i] == ' ') {
+                if (is_operator(input[i])) {
+                    printf("Error: Consecutive operators found\n");
+                    return 1; // Return an error
+                }
+                i++;
+            }
+        } else {
+            i++;
+        }
+    }
+    return 0; // No consecutive operators found
+}
+
 node* calculations(node* operand1, node* operand2, char operator){
+
     node* result;
     switch(operator){
         case('+'):
@@ -110,6 +131,7 @@ node* calculations(node* operand1, node* operand2, char operator){
         default:
             break;
     }
+
     return result;
 }
 
@@ -118,6 +140,12 @@ node* calculations(node* operand1, node* operand2, char operator){
 //also for pushing operator and operands into stack
 //carrying out calculation along the way
 node* evaluate_expression(char input[]) {
+
+    // Check for consecutive operators
+    if (has_consecutive_operators(input)) {
+        // Handle error and return NULL or an appropriate error code
+        return NULL;
+    }
 
     /***intializing a linked list for each number in the input string***/
 
@@ -192,6 +220,12 @@ node* evaluate_expression(char input[]) {
         result = calculations(operand1, operand2, operator);
         push_operand(&s2, result);
     }
+
+    // Free the memory allocated for linked lists
+    for (int i = 0; i < count + 1; i++) {
+        free_list(LL_pointer[i]);  // Assuming you have a function to free the linked list
+    }
+    free(LL_pointer);
 
    //the only LL in the node stack would be the final result 
    return pop_operand(&s2);
