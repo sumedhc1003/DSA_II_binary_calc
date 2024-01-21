@@ -214,74 +214,53 @@ node* multiplication(node** operand1, node** operand2){
 
     node* result = create_zero_list(count_nodes(operand1) + count_nodes(operand2) + 1);
     
-    return result;
-
-    /*
-    //declaring the result LL
-    node *result = NULL;
-    insert_at_beginning(&result, 0);//creating a node was to handle the case of seg fault due to initialization of result pointers 1 and 2
-    insert_at_beginning(&result, 0);
-    node* result_ptr1 = result;
-
     //declaring the pointers for iteration ahead
-    node *ptr1 = *operand1, *ptr2 = *operand2; //operand pointers
-    node *result_ptr2 = NULL; //two result LL pointer for traversin result LL
-    int carry = 0;
+    node *ptr1 = NULL, *ptr2 =*operand2;
+    node* result_ptr1 = result, *result_ptr2 = NULL;
 
-    //traversing each digit of operand two to be multiplied with each of operant1
+    //traversing each digit of operand to be multiplied with each of operant1
     while(ptr2){
 
         result_ptr2 = result_ptr1; //resetting the result pointer to be used to traverse result LL again.
-        
-
         ptr1 = *operand1;  //resetting the point to the start operand1 after each iteration
-        carry = 0; //resetting carry
-        
-        //traversing operand1
+        int carry = 0; //resetting carry
+
         while(ptr1){
 
-            //in case of no node at result pointer 2
-            if(result_ptr2 == NULL){
-
-                int mul_result = (ptr1->data * ptr2->data) + carry;
-                carry = mul_result / 10; //finding the carry 
-
-                result_ptr2 = append_at_end(&result, mul_result % 10); //creating the node in result LL
-            }
-            else{ //incase the node exist at result pointer 2
-            
-                int mul_result = (result_ptr2->data) + (ptr1->data * ptr2->data) + carry;
-                carry = mul_result / 10; //finding the carry 
-                result_ptr2->data = mul_result % 10; //updating the value in the LL
-
-            }
+            int mul_result = (result_ptr2->data) + (ptr1->data * ptr2->data) + carry;
+            carry = mul_result / 10; //finding the carry 
+            result_ptr2->data = mul_result % 10; //updating the value in the LL
 
             //incremeting the required pointers
             result_ptr2 = result_ptr2->next;
             ptr1 =ptr1->next;
         }
-        
+
         // if carry is remaining from last multiplication
         if (carry != 0) {
-            if(result_ptr2 == NULL){
-                result_ptr2 = append_at_end(&result, carry);
-            }
-            else{
                 result_ptr2->data += carry;
-            }
         }
 
-        //to handle an edge case wherein first result pointer might go to NULL
-        if(result_ptr1 == NULL){
-            result_ptr1 = result_ptr2;
-        }
-        
         result_ptr1 = result_ptr1->next; //move one place left for addition of the next digit of operand2 with operand1
         ptr2 = ptr2->next;
     }
 
-    return result; //as its already in the reverse order
-    */
+    // removing zeros at the start
+    reverse_list(&result);
+    node* temp = NULL;
+    while (result && result->data == 0){
+        temp = result;
+        result = result->next;
+        free(temp);
+    }
+
+    if(result == NULL){
+        insert_at_beginning(&result, 0);
+        return result;
+    }
+
+    reverse_list(&result);
+    return result;
 }
 
 //division
