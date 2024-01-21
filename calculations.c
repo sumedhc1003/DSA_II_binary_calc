@@ -118,7 +118,6 @@ node* subtraction(node** operand1, node** operand2){
     //checking the LL for which one is greater
     int flag_for_negative;
     node* greater_LL = determine_greater_operand(operand1, operand2);
-    traverse(&greater_LL);
 
     //determining the smaller LL
     node *smaller_LL = NULL;
@@ -267,14 +266,12 @@ node* division(node** operand1, node** operand2){
 
     node* greater = determine_greater_operand(operand1, operand2);
 
-    traverse(&greater);
-    /*
+
     if(greater == *operand2){
         return result;
     }
     else{
         return increment_result_by_one;
     }
-    */
    return NULL;
 }
