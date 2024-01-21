@@ -5,6 +5,7 @@ node* addition(node** operand1, node** operand2);
 node* determine_greater_operand(node** operand1, node** operand2); 
 node* subtraction(node** operand1, node** operand2);
 node* multiplication(node** operand1, node** operand2);
+node* copy_LL(node* head);
 node* division(node** operand1, node** operand2);
 
 #endif 

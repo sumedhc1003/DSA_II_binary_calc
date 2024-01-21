@@ -89,9 +89,14 @@ node* determine_greater_operand(node** operand1, node** operand2){
         ptr2 = *operand2;
 
         //iterate until the first point of difference
-        while(ptr1->data == ptr2->data){
+        while(ptr1 && ptr2 && (ptr1->data == ptr2->data)){
             ptr1 =ptr1->next;
             ptr2 =ptr2->next;
+        }
+
+        //handing the case when both operands are identical!
+        if((ptr1 == NULL) && (ptr2 == NULL)){
+            return *operand1;
         }
 
         //returning the greater
@@ -254,6 +259,23 @@ node* multiplication(node** operand1, node** operand2){
 }
 
 //division
+
+//for making a copy of the LL
+node* copy_LL(node* head){
+
+    node* result = NULL;
+    node* ptr = head;
+
+    //travering a making copy of each node present
+    while(ptr != NULL)
+    {
+        insert_at_beginning(&result,ptr->data);
+        ptr = ptr->next;
+    }
+    return result;
+}
+
+
 node* division(node** operand1, node** operand2){
 
     //initializing the result LL
@@ -271,7 +293,17 @@ node* division(node** operand1, node** operand2){
         return result;
     }
     else{
-        return increment_result_by_one;
+        //making a copy of operand2 to be added repeatedly
+        node* operand2_copy = copy_LL(*operand2);
+        reverse_list(&operand2_copy);
+
+        //iterating and going on adding operand2 to itself until its greater than operand1
+        while(determine_greater_operand(operand1, operand2) == *operand1){
+            result = addition(&result, &increment_result_by_one);
+            *operand2 = addition(operand2,&operand2_copy);
+        }
+
+        return result;
     }
    return NULL;
 }
