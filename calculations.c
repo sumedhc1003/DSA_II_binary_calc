@@ -50,6 +50,7 @@ node* addition(node** operand1, node** operand2){
 //subtraction definition
 //functio to determine which of the two operands is greater
 node* determine_greater_operand(node** operand1, node** operand2){
+
     //counting the length of each operand
     int count1 = 1, count2 = 1; // we have handled the case of empty LL ahead
     node* ptr1 = *operand1;
@@ -80,10 +81,32 @@ node* determine_greater_operand(node** operand1, node** operand2){
         return *operand2;
     }
     else{         //handling the case of equal length strings
-        if(ptr1->data > ptr2->data){ //as the pointers were left of the last node of LL which happen to be the first digit of the operands
+
+        //getting the LL in correct order so that we can start comparing from start.
+        reverse_list(operand1);
+        reverse_list(operand2);
+        ptr1 = *operand1;
+        ptr2 = *operand2;
+
+        //iterate until the first point of difference
+        while(ptr1->data == ptr2->data){
+            ptr1 =ptr1->next;
+            ptr2 =ptr2->next;
+        }
+
+        //returning the greater
+        if(ptr1->data > ptr2->data){
+            //getting back the order to normal from last manipulation
+            reverse_list(operand1);
+            reverse_list(operand2);
+
             return *operand1;
         }
         else{
+            //getting back the order to normal from last manipulation
+            reverse_list(operand1);
+            reverse_list(operand2);
+
             return *operand2;
         }
     }
@@ -95,7 +118,7 @@ node* subtraction(node** operand1, node** operand2){
     //checking the LL for which one is greater
     int flag_for_negative;
     node* greater_LL = determine_greater_operand(operand1, operand2);
-
+    traverse(&greater_LL);
 
     //determining the smaller LL
     node *smaller_LL = NULL;
@@ -233,5 +256,25 @@ node* multiplication(node** operand1, node** operand2){
 
 //division
 node* division(node** operand1, node** operand2){
-    return NULL;
+
+    //initializing the result LL
+    node* result = NULL;
+    insert_at_beginning(&result, 0);
+
+    //initializing a LL to be used to increment result later on
+    node *increment_result_by_one = NULL;
+    insert_at_beginning(&increment_result_by_one, 1);
+
+    node* greater = determine_greater_operand(operand1, operand2);
+
+    traverse(&greater);
+    /*
+    if(greater == *operand2){
+        return result;
+    }
+    else{
+        return increment_result_by_one;
+    }
+    */
+   return NULL;
 }
