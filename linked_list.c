@@ -70,3 +70,15 @@ void reverse_list(node** head)  //reverses list
     }
     *head = prev;
 }
+
+//counting the number of nodes
+int count_nodes(node **head){
+
+    node* ptr = *head;
+    int size = 0;
+    while (ptr) {
+        ptr = ptr->next;
+        size++;
+    }
+    return size;
+}

@@ -198,8 +198,25 @@ node* subtraction(node** operand1, node** operand2){
 
 
 //multiplication
+
+node* create_zero_list(int size){
+	node* head = NULL;
+    
+	for(int i = 0; i < size; i++){
+        insert_at_beginning(&head, 0);
+    }
+        
+	return head;
+}
+
+
 node* multiplication(node** operand1, node** operand2){
 
+    node* result = create_zero_list(count_nodes(operand1) + count_nodes(operand2) + 1);
+    
+    return result;
+
+    /*
     //declaring the result LL
     node *result = NULL;
     insert_at_beginning(&result, 0);//creating a node was to handle the case of seg fault due to initialization of result pointers 1 and 2
@@ -264,6 +281,7 @@ node* multiplication(node** operand1, node** operand2){
     }
 
     return result; //as its already in the reverse order
+    */
 }
 
 //division
