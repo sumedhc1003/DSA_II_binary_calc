@@ -7,6 +7,31 @@ void init(node **head){
     *head = NULL;
 }
 
+//appending at the end of LL
+node* append_at_end(node **head, int d){
+    
+    // creating and initializing the new node
+    node *nn = (node*)malloc(sizeof(node));
+    nn->data = d;
+    nn->next = NULL;
+
+
+    // If the linked list is empty, make the new node as the head
+    if (*head == NULL) {
+        *head = nn;
+        return NULL;
+    }
+
+    // Traverse the list to find the temp node
+    node* temp = *head;  // To traverse the list
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = nn;
+
+    return nn;
+}
+
 void insert_at_beginning(node **head, int d){
     //creating the node
     node *nn = (node*)malloc(sizeof(node));
